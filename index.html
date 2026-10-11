@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaChain Live | Enterprise Cold-Chain Intelligence</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for High-End Telemetry Graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Pro Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        spaceBlack: '#050B14',
+                        cardDark: '#0D1726',
+                        cardHover: '#132238',
+                        neonBlue: '#00F0FF',
+                        neonCyan: '#38BDF8',
+                        safeGreen: '#10B981',
+                        alertRed: '#F43F5E',
+                        warnYellow: '#FBBF24',
+                        borderSubtle: '#1E293B'
+                    },
+                    boxShadow: {
+                        glow: '0 0 25px -5px rgba(0, 240, 255, 0.15)',
+                        cardGlow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Glassmorphism & Scrollbars */
+        .glass-panel {
+            background: rgba(13, 23, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050B14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38BDF8;
+        }
+    </style>
+</head>
+<body class="bg-spaceBlack text-gray-100 font-sans antialiased min-h-screen flex flex-col selection:bg-neonBlue selection:text-spaceBlack">
+
+    <!-- Ambient Background Glows -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-teal-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="glass-panel sticky top-0 z-50 px-6 py-4 flex justify-between items-center border-b border-borderSubtle">
+        <div class="flex items-center space-x-3">
+            <div class="bg-gradient-to-tr from-blue-600 to-cyan-400 p-2.5 rounded-xl shadow-glow text-spaceBlack font-black flex items-center justify-center">
+                <i class="fa-solid fa-cube-nak text-lg"></i>
+            </div>
+            <div>
+                <div class="flex items-center space-x-2">
+                    <h1 class="text-lg font-extrabold tracking-tight text-white">PharmaChain<span class="text-neonBlue">.live</span></h1>
+                    <span class="text-[10px] bg-blue-500/10 text-neonBlue font-semibold px-2 py-0.5 rounded-full border border-blue-500/20">AWS IoT + Flink</span>
+                </div>
+                <p class="text-xs text-gray-400">Autonomous 2°C–8°C Cold-Chain Telemetry</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:flex items-center space-x-2 bg-spaceBlack/50 px-3.5 py-1.5 rounded-lg border border-borderSubtle text-xs">
+                <span class="w-2 h-2 rounded-full bg-safeGreen animate-ping"></span>
+                <span class="text-gray-300">AWS IoT Core Stream: <strong class="text-safeGreen">Connected</strong></span>
+            </div>
+            <div class="text-xs font-medium bg-spaceBlack/50 px-3.5 py-1.5 rounded-lg border border-borderSubtle text-gray-300">
+                <i class="fa-regular fa-clock mr-1.5 text-neonBlue"></i> <span id="utc-clock">--:--:-- UTC</span>
+            </div>
+            <div class="h-8 w-px bg-borderSubtle"></div>
+            <div class="flex items-center space-x-2">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-900 to-cyan-700 flex items-center justify-center font-bold text-xs border border-cyan-500/30">
+                    AI
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <main class="flex-1 p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6 z-10">
+
+        <!-- Welcome Banner & Quick Actions -->
+        <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+            <div class="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-neonBlue/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div>
+                <h2 class="text-2xl font-bold text-white tracking-tight">Global Vaccine & Biologics Fleet</h2>
+                <p class="text-xs text-gray-400 mt-1">Real-time windowed validation running on AWS Apache Flink microservices.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="triggerSimulatedAlert()" class="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-semibold px-4 py-2.5 rounded-xl text-xs tracking-wide shadow-lg shadow-red-900/20 transition flex items-center space-x-2 border border-red-500/30">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Simulate Temperature Breach</span>
+                </button>
+                <button onclick="refreshDashboard()" class="bg-spaceBlack/60 hover:bg-spaceBlack text-gray-200 font-semibold px-4 py-2.5 rounded-xl text-xs tracking-wide transition border border-borderSubtle flex items-center space-x-2">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Sync Telemetry</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="glass-panel p-5 rounded-2xl hover:border-blue-500/30 transition group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Active Shipments</p>
+                        <h3 class="text-3xl font-extrabold text-white mt-2 group-hover:text-neonBlue transition">24</h3>
+                    </div>
+                    <div class="p-3 rounded-xl bg-blue-500/10 text-neonBlue border border-blue-500/20">
+                        <i class="fa-solid fa-truck-fast text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-xs text-safeGreen">
+                    <i class="fa-solid fa-arrow-trend-up mr-1.5"></i>
+                    <span>100% Compliance Rate</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-panel p-5 rounded-2xl hover:border-teal-500/30 transition group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Avg Fleet Temp</p>
+                        <h3 id="metric-avg-temp" class="text-3xl font-extrabold text-safeGreen mt-2">4.3 °C</h3>
+                    </div>
+                    <div class="p-3 rounded-xl bg-teal-500/10 text-safeGreen border border-teal-500/20">
+                        <i class="fa-solid fa-temperature-arrow-down text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-xs text-gray-400">
+                    <span>Target Range: <strong class="text-gray-200">2.0°C – 8.0°C</strong></span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-panel p-5 rounded-2xl hover:border-purple-500/30 transition group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">IoT Core Sensors</p>
+                        <h3 class="text-3xl font-extrabold text-white mt-2 group-hover:text-purple-400 transition">128</h3>
+                    </div>
+                    <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                        <i class="fa-solid fa-tower-broadcast text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-xs text-purple-400">
+                    <i class="fa-solid fa-circle-check mr-1.5"></i>
+                    <span>All nodes healthy</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="glass-panel p-5 rounded-2xl hover:border-emerald-500/30 transition group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Spoilage Prevented</p>
+                        <h3 class="text-3xl font-extrabold text-safeGreen mt-2">$2.4M</h3>
+                    </div>
+                    <div class="p-3 rounded-xl bg-emerald-500/10 text-safeGreen border border-emerald-500/20">
+                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-xs text-safeGreen">
+                    <i class="fa-solid fa-bolt mr-1.5"></i>
+                    <span>Zero waste recorded today</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chart & Flink Live Stream Analytics -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Chart Section (2 Columns) -->
+            <div class="lg:col-span-2 glass-panel p-6 rounded-2xl flex flex-col">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6">
+                    <div>
+                        <h2 class="text-base font-bold text-white">Live Cold-Chain Stream (2°C–8°C Safe Window)</h2>
+                        <p class="text-xs text-gray-400">High-resolution telemetry stream mapped via AWS IoT & Chart.js</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs px-3 py-1 bg-spaceBlack/60 border border-borderSubtle rounded-lg text-neonBlue font-medium">
+                            <i class="fa-solid fa-microchip mr-1"></i> Unit #PHARMA-904
+                        </span>
+                    </div>
+                </div>
+                <div class="flex-1 relative min-h-[320px]">
+                    <canvas id="enterpriseTempChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Flink Stream Analytics & Logs (1 Column) -->
+            <div class="glass-panel p-6 rounded-2xl flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-base font-bold text-white">Flink Stream Logs</h2>
+                        <p class="text-xs text-gray-400">Windowed anomaly analysis</p>
+                    </div>
+                    <span class="w-2 h-2 rounded-full bg-safeGreen animate-ping"></span>
+                </div>
+
+                <div class="space-y-3 overflow-y-auto max-h-[320px] pr-1" id="live-logs-box">
+                    <!-- Log Item 1 -->
+                    <div class="p-3 bg-spaceBlack/50 border border-borderSubtle rounded-xl text-xs space-y-1.5">
+                        <div class="flex justify-between text-gray-400">
+                            <span class="text-gray-200 font-semibold"><i class="fa-solid fa-circle text-safeGreen text-[7px] mr-1"></i> Sensor #401</span>
+                            <span class="text-[10px]">Just now</span>
+                        </div>
+                        <p class="text-gray-300">Temp: <strong class="text-safeGreen">4.1°C</strong> | Humidity: <strong>44%</strong></p>
+                        <p class="text-[10px] text-gray-400 font-mono">GPS: 40.7128° N, 74.0060° W</p>
+                    </div>
+                    <!-- Log Item 2 -->
+                    <div class="p-3 bg-spaceBlack/50 border border-borderSubtle rounded-xl text-xs space-y-1.5">
+                        <div class="flex justify-between text-gray-400">
+                            <span class="text-gray-200 font-semibold"><i class="fa-solid fa-circle text-safeGreen text-[7px] mr-1"></i> Sensor #402</span>
+                            <span class="text-[10px]">3s ago</span>
+                        </div>
+                        <p class="text-gray-300">Temp: <strong class="text-safeGreen">3.8°C</strong> | Humidity: <strong>47%</strong></p>
+                        <p class="text-[10px] text-gray-400 font-mono">GPS: 34.0522° N, 118.2437° W</p>
+                    </div>
+                    <!-- Log Item 3 -->
+                    <div class="p-3 bg-spaceBlack/50 border border-borderSubtle rounded-xl text-xs space-y-1.5">
+                        <div class="flex justify-between text-gray-400">
+                            <span class="text-gray-200 font-semibold"><i class="fa-solid fa-circle text-safeGreen text-[7px] mr-1"></i> Sensor #403</span>
+                            <span class="text-[10px]">7s ago</span>
+                        </div>
+                        <p class="text-gray-300">Temp: <strong class="text-safeGreen">5.2°C</strong> | Humidity: <strong>41%</strong></p>
+                        <p class="text-[10px] text-gray-400 font-mono">GPS: 51.5074° N, 0.1278° W</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-borderSubtle">
+                    <div class="flex items-center justify-between text-xs text-gray-400">
+                        <span>Stream Engine Status</span>
+                        <span class="text-safeGreen font-semibold">Active (0 dropped packets)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Fleet Shipments Table -->
+        <div class="glass-panel p-6 rounded-2xl">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <div>
+                    <h2 class="text-base font-bold text-white">Active Pharmaceutical Shipments</h2>
+                    <p class="text-xs text-gray-400">Real-time status tracking across global distribution hubs</p>
+                </div>
+                <div class="flex items-center space-x-2 text-xs">
+                    <span class="px-3 py-1.5 bg-spaceBlack/50 border border-borderSubtle rounded-xl text-gray-300">
+                        Filter: <strong class="text-white">All Regions</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-spaceBlack/60 text-gray-400 uppercase font-semibold border-b border-borderSubtle tracking-wider">
+                        <tr>
+                            <th class="py-3 px-4 rounded-l-xl">Shipment ID</th>
+                            <th class="py-3 px-4">Cargo Type</th>
+                            <th class="py-3 px-4">Origin / Destination</th>
+                            <th class="py-3 px-4">Current Temp</th>
+                            <th class="py-3 px-4">Battery</th>
+                            <th class="py-3 px-4 rounded-r-xl">Compliance Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-borderSubtle/40 text-gray-300 font-medium">
+                        <tr class="hover:bg-spaceBlack/30 transition">
+                            <td class="py-3.5 px-4 font-mono text-neonBlue font-bold">#SHP-8041</td>
+                            <td class="py-3.5 px-4 text-white">Pfizer Covid-19 Vaccine</td>
+                            <td class="py-3.5 px-4 text-gray-400">Brussels Hub ➔ New York</td>
+                            <td class="py-3.5 px-4 font-bold text-safeGreen">3.9°C</td>
+                            <td class="py-3.5 px-4">92%</td>
+                            <td class="py-3.5 px-4"><span class="px-2.5 py-1 bg-emerald-500/10 text-safeGreen border border-emerald-500/20 rounded-full text-[10px] font-bold">OPTIMAL</span></td>
+                        </tr>
+                        <tr class="hover:bg-spaceBlack/30 transition">
+                            <td class="py-3.5 px-4 font-mono text-neonBlue font-bold">#SHP-8042</td>
+                            <td class="py-3.5 px-4 text-white">Insulin Glargine Vials</td>
+                            <td class="py-3.5 px-4 text-gray-400">Zurich Hub ➔ Singapore</td>
+                            <td class="py-3.5 px-4 font-bold text-safeGreen">4.5°C</td>
+                            <td class="py-3.5 px-4">84%</td>
+                            <td class="py-3.5 px-4"><span class="px-2.5 py-1 bg-emerald-500/10 text-safeGreen border border-emerald-500/20 rounded-full text-[10px] font-bold">OPTIMAL</span></td>
+                        </tr>
+                        <tr class="hover:bg-spaceBlack/30 transition">
+                            <td class="py-3.5 px-4 font-mono text-neonBlue font-bold">#SHP-8043</td>
+                            <td class="py-3.5 px-4 text-white">Monoclonal Antibodies</td>
+                            <td class="py-3.5 px-4 text-gray-400">Frankfurt ➔ Tokyo</td>
+                            <td class="py-3.5 px-4 font-bold text-safeGreen">5.1°C</td>
+                            <td class="py-3.5 px-4">78%</td>
+                            <td class="py-3.5 px-4"><span class="px-2.5 py-1 bg-emerald-500/10 text-safeGreen border border-emerald-500/20 rounded-full text-[10px] font-bold">OPTIMAL</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-borderSubtle py-4 text-center text-xs text-gray-400 mt-auto">
+        PharmaChain Live Cloud Intelligence &bull; Designed for AWS Free Tier Architecture
+    </footer>
+
+    <!-- Interactive JavaScript Engine -->
+    <script>
+        // Live UTC Clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('utc-clock').innerText = now.toUTCString().split(' ')[4] + ' UTC';
+        }, 1000);
+
+        // Chart.js Configuration
+        const ctx = document.getElementById('enterpriseTempChart').getContext('2d');
+        const enterpriseTempChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['12:00', '12:05', '12:10', '12:15', '12:20', '12:25', '12:30'],
+                datasets: [
+                    {
+                        label: 'Sensor Temp (°C)',
+                        data: [4.2, 4.0, 3.8, 4.3, 4.5, 4.1, 4.2],
+                        borderColor: '#00F0FF',
+                        backgroundColor: 'rgba(0, 240, 255, 0.08)',
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.4
